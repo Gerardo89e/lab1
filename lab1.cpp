@@ -1,6 +1,11 @@
 //
+<<<<<<< HEAD
+//modified by:Gerardo Martinez-Flores
+//date:14 September 2019
+=======
 //modified by:
 //date:
+>>>>>>> de7d0f37533874b40e02a81b8cb8a974c73c659e
 //
 //3350 Spring 2019 Lab-1
 //This program demonstrates the use of OpenGL and XWindows
@@ -39,6 +44,11 @@ using namespace std;
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
 #include <GL/glx.h>
+<<<<<<< HEAD
+//#include "log.h"
+#include "fonts.h"
+=======
+>>>>>>> de7d0f37533874b40e02a81b8cb8a974c73c659e
 
 const int MAX_PARTICLES = 2000;
 const float GRAVITY     = 0.1;
@@ -60,6 +70,10 @@ struct Particle {
 	Vec velocity;
 };
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> de7d0f37533874b40e02a81b8cb8a974c73c659e
 class Global {
 public:
 	int xres, yres;
@@ -115,7 +129,10 @@ int main()
 	}
 	return 0;
 }
+<<<<<<< HEAD
+=======
 
+>>>>>>> de7d0f37533874b40e02a81b8cb8a974c73c659e
 //-----------------------------------------------------------------------------
 //Global class functions
 //-----------------------------------------------------------------------------
@@ -208,6 +225,11 @@ void init_opengl(void)
 	glOrtho(0, g.xres, 0, g.yres, -1, 1);
 	//Set the screen background color
 	glClearColor(0.1, 0.1, 0.1, 1.0);
+<<<<<<< HEAD
+    glEnable(GL_TEXTURE_2D);
+    initialize_fonts();
+=======
+>>>>>>> de7d0f37533874b40e02a81b8cb8a974c73c659e
 }
 
 void makeParticle(int x, int y)
@@ -321,7 +343,20 @@ void movement()
 
 void render()
 {
+<<<<<<< HEAD
+    
 	glClear(GL_COLOR_BUFFER_BIT);
+    /*Rect r;
+	glClear(GL_COLOR_BUFFER_BIT);
+    r.bot= 200;
+    r.left =  300;
+    r.center =0;
+    ggprint8b(&r, 16, 0x00ff0000, "3350 waterfall");
+*/
+    //new code abouve this
+=======
+	glClear(GL_COLOR_BUFFER_BIT);
+>>>>>>> de7d0f37533874b40e02a81b8cb8a974c73c659e
 	//Draw shapes...
 	//draw the box
 	Shape *s;
@@ -339,10 +374,39 @@ void render()
 		glVertex2i( w, -h);
 	glEnd();
 	glPopMatrix();
+<<<<<<< HEAD
+//---------another box-----------------------------------
+/*    Shape *e;
+    glColor3sub(255,0,0);
+    e = &g.box;
+    glPushMatrix();
+    glTranslatef(e->center.x,e->center.y,e->center.z);
+    float j,k;
+    j= e->width;
+    k = e->height;
+    glBegin(GL_QUADS);
+        glVertex2i(w,-h);
+
+        glVertex2i(j,k);
+
+        glVertex2i(j,k);
+
+        glVertex2i(j,-k);
+
+        glVertex2i(j,k);
+     glEnd();
+     glPopMatrix();
+*/
+    //
+	//Draw particles here
+	//if (g.n > 0) {
+ for(int i=0;i<g.n;i++) {
+=======
 	//
 	//Draw particles here
 	//if (g.n > 0) {
  for(int i=0;i<g.n;i++){
+>>>>>>> de7d0f37533874b40e02a81b8cb8a974c73c659e
 
 		//There is at least one particle to draw.
 		glPushMatrix();
@@ -360,11 +424,21 @@ void render()
 	//
 	//Draw your 2D text here
 
+<<<<<<< HEAD
+    Rect r;
+//	glClear(GL_COLOR_BUFFER_BIT);
+    r.bot= 195;
+    r.left =  400;
+    r.center =0;
+
+    ggprint8b(&r, 16, 0x00ff0000, "3350 waterfall");
+=======
 
 
 
 
 
+>>>>>>> de7d0f37533874b40e02a81b8cb8a974c73c659e
 
 }
 
