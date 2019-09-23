@@ -54,7 +54,7 @@ struct Vec {
 };
 
 struct Shape {
-	float width, height;
+	float width=80, height=10;
 	float radius;
 	Vec center;
 };
@@ -67,7 +67,7 @@ struct Particle {
 class Global {
 public:
 	int xres, yres;
-	Shape box;
+	Shape box[5];
 	Particle particle[MAX_PARTICLES];
 //	Particle particle;
 	int n;
@@ -127,10 +127,10 @@ Global::Global()
 	xres = 800;
 	yres = 600;
 	//define a box shape
-	box.width = 100;
-	box.height = 10;
-	box.center.x = 120 + 5*65;
-	box.center.y = 500 - 5*60;
+//	box.width = 100;
+//	box.height = 10;
+//	box.center.x = 120 + 5*65;
+//	box.center.y = 500 - 5*60;
 	n = 0;
 }
 
@@ -226,9 +226,9 @@ void makeParticle(int x, int y)
 	Particle *p = &g.particle[g.n];
 	p->s.center.x = x;
 	p->s.center.y = y;
-	p->velocity.y = -0.2;
+	p->velocity.y = -0.3;
 	p->velocity.x =  (double)rand() / (double)RAND_MAX-0.5;
-	p->velocity.y= (double)rand() / (double)RAND_MAX-0.5+0.25;
+	p->velocity.y= (double)rand() / (double)RAND_MAX+0.5+0.10;
 	++g.n;
 }
 
@@ -300,7 +300,7 @@ void movement()
 {
 	if (g.n <= 0)
 		return;
-	for(int i=0;i<g.n;i++){
+	for(int i=0;i<g.n;i++) {
 	Particle *p = &g.particle[i];
 	p->s.center.x += p->velocity.x;
 	p->s.center.y += p->velocity.y;
@@ -308,17 +308,13 @@ void movement()
 	//check for collision with shapes...
 	//Shape *s;
 
-	Shape *s =&g.box;
-	   if( p->s.center.y < 390 + s->height && 
-		   p->s.center.x > 390 - s->width &&
-		   p->s.center.x < 390 + s->width &&
-		   p->s.center.y > 390 - s->height)
-	       p->velocity.y=-p->velocity.y;
-        if( p->s.center.y < s->center.y + s->height && 
-		   800 > s->center.x - s->width &&
-		   800 < s->center.x + s->width &&
-		   p->s.center.y > s->center.y - s->height)
-	       p->velocity.y=-p->velocity.y;
+      for(int j=0;j<5;j++) {
+	   if( p->s.center.y < g.box[j].center.y + g.box[j].height && 
+		   p->s.center.x > g.box[j].center.x - g.box[j].width &&
+		   p->s.center.x < g.box[j].center.x + g.box[j].width &&
+		   p->s.center.y > g.box[j].center.y - g.box[j].height)
+	       p->velocity.y=0.2;
+      }
        /* if( p->s.center.y < s->center.y + s->height && 
 		   p->s.center.x > s->center.x - s->width &&
 		   p->s.center.x < s->center.x + s->width &&
@@ -341,99 +337,34 @@ void render()
     
 	//Draw shapes...
 	//draw the box
-    //first box
-	Shape *s;
-	glColor3ub(90,140,90);
-	s = &g.box;
-	glPushMatrix();
-	glTranslatef(190,490, s->center.z);
-	float w, h;
-	w = s->width;
-	h = s->height;
-	glBegin(GL_QUADS);
-		glVertex2i(-w, -h);
-		glVertex2i(-w,  h);
-		glVertex2i( w,  h);
-		glVertex2i( w, -h);
-	glEnd();
-	glPopMatrix();
-//second box
-glColor3ub(90,140,90);
-	s = &g.box;
-	glPushMatrix();
-	glTranslatef(390,450,s->center.z);
-	//float w, h;
-	w = s->width;
-	h = s->height;
-	glBegin(GL_QUADS);
-		glVertex2i(-w, -h);
-		glVertex2i(-w,  h);
-		glVertex2i( w,  h);
-		glVertex2i( w, -h);
-	glEnd();
-	glPopMatrix();
-//third box
-    glColor3ub(90,140,90);
-	s = &g.box;
-	glPushMatrix();
-	glTranslatef(550,340,s->center.z);
-	//float w, h;
-	w = s->width;
-	h = s->height;
-	glBegin(GL_QUADS);
-		glVertex2i(-w, -h);
-		glVertex2i(-w,  h);
-		glVertex2i( w,  h);
-		glVertex2i( w, -h);
-	glEnd();
-	glPopMatrix();
-//fourth box
-    glColor3ub(90,140,90);
-	s = &g.box;
-	glPushMatrix();
-	glTranslatef(660,260,s->center.z);
-	//float w, h;
-	w = s->width;
-	h = s->height;
-	glBegin(GL_QUADS);
-		glVertex2i(-w, -h);
-		glVertex2i(-w,  h);
-		glVertex2i( w,  h);
-		glVertex2i( w, -h);
-	glEnd();
-	glPopMatrix();
-    //fifth box
-glColor3ub(90,140,90);
-	s = &g.box;
-	glPushMatrix();
-	glTranslatef(730,300,s->center.z);
-	//float w, h;
-	w = s->width;
-	h = s->height;
-	glBegin(GL_QUADS);
-		glVertex2i(-w, -h);
-		glVertex2i(-w,  h);
-		glVertex2i( w,  h);
-		glVertex2i( w, -h);
-	glEnd();
-	glPopMatrix();
-    //sixth box
-/*
-glColor3ub(90,140,90);
-	s = &g.box;
-	glPushMatrix();
-	glTranslatef(700,400,s->center.z);
-	//float w, h;
-	w = s->width;
-	h = s->height;
-	glBegin(GL_QUADS);
-		glVertex2i(-w, -h);
-		glVertex2i(-w,  h);
-		glVertex2i( w,  h);
-		glVertex2i( w, -h);
-	glEnd();
-	glPopMatrix();
-*/
+	glColor3ub(90,140,90); 
+
+    float w[5],h[5];
+    g.box[0].center.x =100;
+    
+    g.box[0].center.y =500;
+    for(int i=1;i<5;i++) {
+    g.box[i].center.x =g.box[i-1].center.x + 90;
+
+    g.box[i].center.y =g.box[i-1].center.y - 80;
+    }
+    for(int i =0; i<5;i++) {
+        glPushMatrix();
+        glTranslatef(g.box[i].center.x, g.box[i].center.y, g.box[i].center.z);
+        w[i] = g.box[i].width;
+
+        h[i] = g.box[i].height;
+        glBegin(GL_QUADS);
+            glVertex2i(-w[i], -h[i]);
+		    glVertex2i(-w[i],  h[i]);
+		    glVertex2i( w[i],  h[i]);
+		    glVertex2i( w[i], -h[i]);
+	    glEnd();
+        glPopMatrix();
+
+    }
+
+
 	//
 	//Draw particles here
 	//if (g.n > 0) {
@@ -443,12 +374,12 @@ glColor3ub(90,140,90);
 		glPushMatrix();
 		glColor3ub(150,160,220);
 		Vec *c = &g.particle[i].s.center;
-		w = h = 2;
+		w[0] = h[0] = 2;
 		glBegin(GL_QUADS);
-			glVertex2i(c->x-w, c->y-h);
-			glVertex2i(c->x-w, c->y+h);
-			glVertex2i(c->x+w, c->y+h);
-			glVertex2i(c->x+w, c->y-h);
+			glVertex2i(c->x-w[0], c->y-h[0]);
+			glVertex2i(c->x-w[0], c->y+h[0]);
+			glVertex2i(c->x+w[0], c->y+h[0]);
+			glVertex2i(c->x+w[0], c->y-h[0]);
 		glEnd();
 		glPopMatrix();
 	}
@@ -456,10 +387,32 @@ glColor3ub(90,140,90);
 	//Draw your 2D text here
     Rect r;
     r.bot= 490;
-    r.left =  190;
+    r.left =  45;
     r.center =0;
 
-    ggprint8b(&r, 16, 0x00ff0000, "3350 waterfall");
+    ggprint8b(&r, 16, 0x00ff0000, "Requirement Analysis");
+
+    r.bot= 410;
+    r.left =  160;
+    r.center =0;
+    ggprint8b(&r, 16, 0x00ff0000, "System Design");
+    
+    r.bot= 330;
+    r.left =  240;
+    r.center =0;
+    ggprint8b(&r, 16, 0x00ff0000, "Implementation");
+
+    r.bot= 255;
+    r.left =  350;
+    r.center =0;
+    ggprint8b(&r, 16, 0x00ff0000, "Testing");
+
+    r.bot= 170;
+    r.left =  420;
+    r.center =0;
+    ggprint8b(&r, 16, 0x00ff0000, "Deployment");
+
+
 }
 
 
