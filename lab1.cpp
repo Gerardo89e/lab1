@@ -44,7 +44,7 @@ using namespace std;
 //#include "log.h"
 #include "fonts.h"
 
-const int MAX_PARTICLES = 2000;
+const int MAX_PARTICLES = 6000;
 const float GRAVITY     = 0.1;
 
 //some structures
@@ -219,17 +219,19 @@ void makeParticle(int x, int y)
 {
 	//Add a particle to the particle system.
 	//
+    while(true) {
 	if (g.n >= MAX_PARTICLES)
 		return;
 	cout << "makeParticle() " << x << " " << y << endl;
 	//set position of particle
 	Particle *p = &g.particle[g.n];
-	p->s.center.x = x;
-	p->s.center.y = y;
+	p->s.center.x = 40;
+	p->s.center.y = 580;
 	p->velocity.y = -0.3;
-	p->velocity.x =  (double)rand() / (double)RAND_MAX-0.5;
+	p->velocity.x =  (double)rand() / (double)RAND_MAX+0.5;
 	p->velocity.y= (double)rand() / (double)RAND_MAX+0.5+0.10;
 	++g.n;
+    }
 }
 
 void check_mouse(XEvent *e)
@@ -244,7 +246,7 @@ void check_mouse(XEvent *e)
 		//This is not a mouse event that we care about.
 		return;
 	}
-	//
+
 	if (e->type == ButtonRelease) {
 		return;
 	}
@@ -260,6 +262,7 @@ void check_mouse(XEvent *e)
 			return;
 		}
 	}
+    
 	if (e->type == MotionNotify) {
 		//The mouse moved!
 		if (savex != e->xbutton.x || savey != e->xbutton.y) {
@@ -269,7 +272,8 @@ void check_mouse(XEvent *e)
 		int y =g.yres - e->xbutton.y;
 		//int x =g.xres - e->xbutton.x;
 		for(int i=0;i<10;i++)
-		    makeParticle(e->xbutton.x,y);
+	    makeParticle(e->xbutton.x,y);
+        
 
 		}
 	}
@@ -372,7 +376,7 @@ void render()
 
 		//There is at least one particle to draw.
 		glPushMatrix();
-		glColor3ub(150,160,220);
+		glColor3ub(255,87,51);
 		Vec *c = &g.particle[i].s.center;
 		w[0] = h[0] = 2;
 		glBegin(GL_QUADS);
@@ -387,10 +391,10 @@ void render()
 	//Draw your 2D text here
     Rect r;
     r.bot= 490;
-    r.left =  45;
+    r.left =  50;
     r.center =0;
 
-    ggprint8b(&r, 16, 0x00ff0000, "Requirement Analysis");
+    ggprint8b(&r, 16, 0x00ff0000, "Requirement");
 
     r.bot= 410;
     r.left =  160;
@@ -410,7 +414,7 @@ void render()
     r.bot= 170;
     r.left =  420;
     r.center =0;
-    ggprint8b(&r, 16, 0x00ff0000, "Deployment");
+    ggprint8b(&r, 16, 0x00ff0000, "Maintenance");
 
 
 }
