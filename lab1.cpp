@@ -225,8 +225,8 @@ void makeParticle(int x, int y)
 	cout << "makeParticle() " << x << " " << y << endl;
 	//set position of particle
 	Particle *p = &g.particle[g.n];
-	p->s.center.x = 40;
-	p->s.center.y = 580;
+	p->s.center.x = 80;
+	p->s.center.y = 700;
 	p->velocity.y = -0.3;
 	p->velocity.x =  (double)rand() / (double)RAND_MAX+0.5;
 	p->velocity.y= (double)rand() / (double)RAND_MAX+0.5+0.10;
@@ -344,13 +344,16 @@ void render()
 	glColor3ub(90,140,90); 
 
     float w[5],h[5];
-    g.box[0].center.x =70;
+    g.box[0].center.x =370;
     
-    g.box[0].center.y =120;
+    g.box[0].center.y =30;
     for(int i=1;i<5;i++) {
-    g.box[i].center.x =g.box[i-1].center.x - 40;
-
-    g.box[i].center.y =g.box[i-1].center.y + 34;
+    g.box[i].center.x =g.box[i-1].center.x -60;
+//40
+    g.box[i].center.y =g.box[i-1].center.y + 50;
+    //34
+    //10+50
+    //50 good number
     }
     for(int i =0; i<5;i++) {
         glPushMatrix();
@@ -390,29 +393,29 @@ void render()
 	//
 	//Draw your 2D text here
     Rect r;
-    r.bot= 490;
-    r.left =  50;
+    r.bot= 220;
+    r.left =  100;
     r.center =0;
 
     ggprint8b(&r, 16, 0x00ff0000, "Requirement");
 
-    r.bot= 410;
-    r.left =  160;
+    r.bot= 170;
+    r.left =  150;
     r.center =0;
     ggprint8b(&r, 16, 0x00ff0000, "System Design");
     
-    r.bot= 330;
-    r.left =  240;
+    r.bot= 120;
+    r.left =  210;
     r.center =0;
     ggprint8b(&r, 16, 0x00ff0000, "Implementation");
 
-    r.bot= 255;
-    r.left =  350;
+    r.bot= 70;
+    r.left =  290;
     r.center =0;
     ggprint8b(&r, 16, 0x00ff0000, "Testing");
 
-    r.bot= 170;
-    r.left =  420;
+    r.bot= 20;
+    r.left =  330;
     r.center =0;
     ggprint8b(&r, 16, 0x00ff0000, "Maintenance");
 
