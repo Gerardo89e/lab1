@@ -124,8 +124,8 @@ int main()
 //-----------------------------------------------------------------------------
 Global::Global()
 {
-	xres = 800;
-	yres = 600;
+	xres = 500;
+	yres = 360;
 	//define a box shape
 //	box.width = 100;
 //	box.height = 10;
@@ -344,13 +344,13 @@ void render()
 	glColor3ub(90,140,90); 
 
     float w[5],h[5];
-    g.box[0].center.x =100;
+    g.box[0].center.x =70;
     
-    g.box[0].center.y =500;
+    g.box[0].center.y =120;
     for(int i=1;i<5;i++) {
-    g.box[i].center.x =g.box[i-1].center.x + 90;
+    g.box[i].center.x =g.box[i-1].center.x - 40;
 
-    g.box[i].center.y =g.box[i-1].center.y - 80;
+    g.box[i].center.y =g.box[i-1].center.y + 34;
     }
     for(int i =0; i<5;i++) {
         glPushMatrix();
